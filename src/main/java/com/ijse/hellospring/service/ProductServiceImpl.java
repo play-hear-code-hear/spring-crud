@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class ProductServiceImpl implements ProductService{
+public class ProductServiceImpl implements ProductService {
 
     @Autowired
     private ProductRepository productRepository;
@@ -28,4 +28,23 @@ public class ProductServiceImpl implements ProductService{
     public Product createProduct(Product product) {
         return productRepository.save(product);
     }
+
+    @Override
+    public Product updateProduct(Long id, Product updateProduct) {
+        Product product1 = productRepository.findById(id).orElse(null);
+        if (product1 != null) {
+            product1.setName(updateProduct.getName());
+            product1.setPrice(updateProduct.getPrice());
+            product1.setQuantity(updateProduct.getQuantity());
+            product1.getCategory().setId(updateProduct.getCategory().getId());
+            return productRepository.save(product1);
+        }else{
+            return null;
+        }
+    }
+
+//    @Override
+//    public void deleteProduct(Long id) {
+//        productRepository.deleteById(id);
+//    }
 }
