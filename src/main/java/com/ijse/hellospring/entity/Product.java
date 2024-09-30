@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 @Entity
@@ -18,4 +20,8 @@ public class Product {
     @ManyToOne
     @JoinColumn(name = "category_id",referencedColumnName = "id")
     private Category category;
+
+    @JsonIgnore
+    @ManyToMany(mappedBy = "orderProducts")
+    private List<Order>orders;
 }
